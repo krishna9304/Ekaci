@@ -23,8 +23,8 @@ tables=np.array(tables[4])
 # print(tables)
 tables=np.array(tables[1:])
 
-@app.route('/predict_calamities', methods=['POST'])
-def predict_calamities():
+@app.route('/predict_disaster', methods=['POST'])
+def predict_disaster():
     #json= {'district': value, 'state': 'ODISHA')
     data= request.get_json(force=True)
     a = max(tables[tables[:, 1] == (data['district'].upper())][:, 2].flatten(), default=-1)
@@ -41,4 +41,13 @@ def predict_calamities():
         elif (prediction == 2):
             return jsonify("Heavy raining, chances of floods.")
         else:
-            return jsonify("Severe Flood chances are at peak.")
+            return jsonify(" Severe Flood chances are at peak.")
+
+#      Get weather daya
+@app.route('/get_data', methods=['POST'])
+def get_weather_data():
+    data= request.get_json(force= True)
+
+
+
+
