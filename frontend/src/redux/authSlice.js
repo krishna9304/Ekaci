@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   msg: "",
@@ -9,15 +10,8 @@ const initialState = {
 };
 
 export const signUpUser = createAsyncThunk("signupuser", async (body) => {
-  // const res = await fetch("ddd", {
-  //   method: "post",
-  //   headers: {
-  //     "Content-Type": "application.json",
-  //   },
-  //   body: JSON.stringify(body),
-  // });
-  // return await res.json();
-  return {};
+  const res = await axios.post("http://localhost:80/api/user/register", body);
+  console.log(res.data);
 });
 
 const authSlice = createSlice({

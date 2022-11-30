@@ -9,10 +9,10 @@ const Register = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
-  const [contact, setContact] = useState("");
-  const [type, setType] = useState("");
+  const [phone, setPhone] = useState("");
+  const [userType, setUserType] = useState("");
   const [password, setPassword] = useState("");
-  const [metaMaskID, setMetaMaskID] = useState("");
+  const [metamask_address, setMetamask_address] = useState("");
   const [style, setStyle] = useState({
     backgroundColor: "#38BDF8",
     borderRadius: "6px",
@@ -26,8 +26,10 @@ const Register = () => {
 
   const registerHandle = (e) => {
     e.preventDefault();
-    dispatch(signUpUser({ email, contact, type, password }));
-    console.log({ email, contact, type, password, metaMaskID });
+    dispatch(
+      signUpUser({ email, phone, userType, password, metamask_address })
+    );
+    console.log({ email, phone, userType, password, metamask_address });
 
     const urls = {
       farmer: "/farmer_register",
@@ -35,7 +37,7 @@ const Register = () => {
       government: "/government_register",
     };
 
-    if (urls[type]) navigate(urls[type]);
+    if (urls[userType]) navigate(urls[userType]);
     return false;
   };
 
@@ -53,7 +55,7 @@ const Register = () => {
         marginBottom: "10px",
         color: "white",
       });
-      setMetaMaskID(res[0]);
+      setMetamask_address(res[0]);
     } else {
       console.log("Please Install Metamask Extension");
     }
@@ -82,14 +84,14 @@ const Register = () => {
             <input
               type="text"
               placeholder="Contact No."
-              value={contact}
-              onChange={(e) => setContact(e.target.value)}
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
               className=" outline-lime-700 outline-2 p-2 border-b-2 mb-5 border-green-700 "
             />
             <select
               id="usertype"
-              value={type}
-              onChange={(e) => setType(e.target.value)}
+              value={userType}
+              onChange={(e) => setUserType(e.target.value)}
               className="outline-lime-700 outline-2 p-2 border-b-2 mb-5 border-green-700  text-gray-400"
             >
               <option value="user">Select User</option>
