@@ -37,3 +37,4 @@ We intend to adopt a <b> decentralised blockchain approach </b> to fix the glitc
 <a href="#" target="_blank" rel="noreferrer"> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9RK9G5Gp5VVyOibXr5sImLm0Gxe_wI59V0gL6NcIw&s" alt="realm" width="60" height="60"/> </a>
 <a href="#" target="_blank" rel="noreferrer"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/TensorFlow_logo.svg/1200px-TensorFlow_logo.svg.png" alt="realm" width="120" height="90"/> </a>
 
+## Get Started
