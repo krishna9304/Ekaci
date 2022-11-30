@@ -20,10 +20,16 @@ export const FarmerServices = {
     if (farmerExists) {
       errors.push("An account is already registered with this farmer id.");
     }
-    const excludedKeysCheck = ["plot_desc", "bank_details", "crop_details"];
+    const excludedKeysCheck = [
+      "plot_desc",
+      "bank_details",
+      "crop_details",
+      "middle_name",
+      "last_name",
+    ];
     for (let key of Object.keys(farmer)) {
       if (!excludedKeysCheck.includes(key)) {
-        if (!farmer.get(key).trim().length)
+        if (!farmer[key as keyof typeof farmer].trim().length)
           errors.push(`${key} is a required parameter.`);
       }
     }

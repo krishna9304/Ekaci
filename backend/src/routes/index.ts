@@ -5,6 +5,6 @@ import userRouter from "./user.route";
 const mainRouter: Application = Router();
 
 mainRouter.use("/user", userRouter);
-mainRouter.use("/user", farmerRouter);
+mainRouter.use("/farmer", farmerRouter);
 
 export default mainRouter;
