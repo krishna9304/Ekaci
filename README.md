@@ -14,13 +14,13 @@ We intend to adopt a <b> decentralised blockchain approach </b> to fix the glitc
 <b> Ekaci’s Machine Learning model </b> will reduce the troubles arising on the field while <b> predicting the crop damage</b>. Ekaci will give the farmers the <b> liberty to upload and report the loss and provide prediction </b>, if he/she is eligible for <b> receiving insurance sum </b> with the help of sensors.
 
 ## Key Features  
-🤝 Allows farmers to apply for multiple Insurance policies <br>
-📈 Enables tracking of Claims (using Blockchain) <br>
-👩‍🌾 Crop Damaged Prediction (using ML) <br>
-📄 Allows Insurance companies to add Insurance policies & plans <br>
-✅ Insurance companies can track & verify claims <br>
-⏫ Insurance companies can update user's claim data <br>
-🖥️ Allows government to track & monitor data <br> 
+🤝 Allows farmers to apply for <b>multiple Insurance policies</b> <br>
+📈 Enables <b>tracking of Claims</b> (using Blockchain) <br>
+👩‍🌾 Crop <b> Damaged Prediction</b> (using ML) <br>
+📄 Allows Insurance companies to add <b>Insurance policies & plans</b> <br>
+✅ Insurance companies can <b> track & verify claims</b> <br>
+⏫ Insurance companies can <b> update user's claim data </b> <br>
+🖥️ Allows government to <b> track & monitor data</b> <br> 
 
 ## Technologies Used
 
