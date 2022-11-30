@@ -3,11 +3,11 @@
 ## Details
 The <b>Government of Odisha </b>has enrolled multiple farmers across the state under the <b>Pradhan Mantri Fasal Bima Yojana (PMFBY)</b> this year. The number of enrollments has been increasing every year and the Government hopes <b>to reach more farmers in a short time</b>. 
 
-Even though the scheme has been designed to be pro-farmer, there have been <b>operational issues in the field</b>. One such challenging problem is the <b>delayed settlement of insurance claims</b> and their rejection by insurance companies. Insurance companies are yet to clear <b>almost 33 percent of estimated claims</b> to the framers who come under the PMFBY.  Due to these issues the state has witnessed farmer agitations about the lack of clarity in the settlement and <b>disbursement of insurance claims</b>. 
+Even though the scheme has been designed to be pro-farmer, there have been <b>operational issues in the field</b>. One such challenging problem is the <b>delayed settlement of insurance claims</b> and their rejection by insurance companies. Insurance companies are yet to clear <b>almost 33 percent of estimated claims</b> to the framers who come under the PMFBY.  Due to these issues the state has witnessed farmer agitations about the lack of clarity in the settlement and <b>disbursement of insurance claims</b>. <br>
 
 ## Solution
 Building <b>Enhanced Krishi Application for Claim of Insurance ( EKACI) </b>( where farmers can register, claim and track claim as well as government authorities can monitor, regulate and report actions taken), that is efficient enough to deal with the <b>farmer insurance claims</b>.
-We intend to adopt a <b> decentralised blockchain approach </b> to fix the glitch caused by <b>insurance companies</b> while settling claims, making each claim get <b>settled at 2x faster rate</b>.
+We intend to adopt a <b> decentralised blockchain approach </b> to fix the glitch caused by <b>insurance companies</b> while settling claims, making each claim get <b>settled at 2x faster rate</b>. <br>
 
 <b> Ekaci’s Machine Learning model </b> will reduce the troubles arising on the field while <b> predicting the crop damage</b>. Ekaci will give the farmers the <b> liberty to upload and report the loss and provide prediction </b>, if he/she is eligible for <b> receiving insurance sum </b> with the help of sensors.
 
@@ -18,7 +18,7 @@ We intend to adopt a <b> decentralised blockchain approach </b> to fix the glitc
 📄 Allows Insurance companies to add Insurance policies & plans <br>
 ✅ Insurance companies can track & verify claims <br>
 ⏫ Insurance companies can update user's claim data <br>
-🖥️ Allows government to track & monitor data <br>
+🖥️ Allows government to track & monitor data <br> 
 
 ## Technologies Used
 
@@ -35,6 +35,38 @@ We intend to adopt a <b> decentralised blockchain approach </b> to fix the glitc
 <a href="#" target="_blank" rel="noreferrer"> <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Expressjs.png" alt="realm" width="100" height="35"/> </a>
 <a href="#" target="_blank" rel="noreferrer"> <img src="https://freepngimg.com/thumb/python_logo/5-2-python-logo-png-image.png" alt="realm" width="100" height="50"/> </a>
 <a href="#" target="_blank" rel="noreferrer"> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9RK9G5Gp5VVyOibXr5sImLm0Gxe_wI59V0gL6NcIw&s" alt="realm" width="60" height="60"/> </a>
-<a href="#" target="_blank" rel="noreferrer"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/TensorFlow_logo.svg/1200px-TensorFlow_logo.svg.png" alt="realm" width="120" height="90"/> </a>
+<a href="#" target="_blank" rel="noreferrer"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/TensorFlow_logo.svg/1200px-TensorFlow_logo.svg.png" alt="realm" width="120" height="90"/> </a>  <br>
 
 ## Get Started
+
+<b>Note: You need to have an ethereum account and some test ethers to run the app.</b>
+  <br>
+  <ol>
+<li>Clone the repository to your <b>local machine</b>.</li> <br>
+  
+```
+git clone https://github.com/skpandey885/DeSIDB.git 
+```
+  
+<li>Install <b>MetaMask</b> & Register your account.</li>
+  
+<li><b>Navigate</b> to the project Directory.</li>
+<br>
+  
+```
+cd DeSIDB
+```
+  
+<li>Install <b>node dependencies.</b></li>
+<li>Verify the presence of dependencies like <b>Truffle and web3js. </b> </li>
+<li> After successful verifcation, run the command. </li><br>
+  
+```
+npm run start
+```
+</ol>
+
+<b>Voila! You are good to go. 🥳 </b>  <br>
+
+## Glimpses from the Project
+
