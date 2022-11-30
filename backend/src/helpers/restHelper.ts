@@ -2,20 +2,25 @@ export class Info {
   code: number;
   message: string;
   type: string;
-  errors: Array<string>;
+  errors: Array<String>;
 
-  constructor(code: number, message: string, type: string) {
+  constructor(
+    code: number,
+    message: string,
+    type: string,
+    errors: Array<String> = []
+  ) {
     this.code = code;
     this.message = message;
     this.type = type;
-    this.errors = [];
+    this.errors = errors;
   }
 
   getArray(): {
     code: number;
     message: string;
     type: string;
-    errors: Array<string>;
+    errors: Array<String>;
   } {
     return {
       code: this.code,
