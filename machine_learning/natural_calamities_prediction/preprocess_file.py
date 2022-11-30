@@ -25,3 +25,8 @@ data['Oct-Dec'].fillna((data['Oct-Dec'].mean()), inplace=True)
 print(data.head())
 data=np.array(data)
 print(data.shape)
+
+state = {name:i for i, name in enumerate(sorted(set(data[:,0])))}
+print(state)
+df=pd.DataFrame(data[:,:14]).replace(state)
+df.to_csv("data.csv")
