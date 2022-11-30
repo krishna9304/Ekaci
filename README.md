@@ -45,7 +45,7 @@ We intend to adopt a <b> decentralised blockchain approach </b> to fix the glitc
 <li>Clone the repository to your <b>local machine</b>.</li> <br>
   
 ```
-git clone https://github.com/skpandey885/DeSIDB.git 
+git clone https://github.com/krishna9304/Ekaci
 ```
   
 <li>Install <b>MetaMask</b> & Register your account.</li>
@@ -54,7 +54,7 @@ git clone https://github.com/skpandey885/DeSIDB.git
 <br>
   
 ```
-cd DeSIDB
+cd Ekaci
 ```
   
 <li>Install <b>node dependencies.</b></li>
