@@ -49,6 +49,8 @@ export interface FarmerInterface extends Document {
   farmer_category: "owner" | "tenant" | "shared-cropping";
   bank_details: bankDetails;
   crop_details: Array<cropDetails>;
+  created_on: string;
+  updated_on: string;
 }
 
 const Farmer = new Schema<FarmerInterface>({
@@ -123,6 +125,14 @@ const Farmer = new Schema<FarmerInterface>({
       default: {},
     },
   ],
+  created_on: {
+    type: String,
+    default: new Date().toDateString(),
+  },
+  updated_on: {
+    type: String,
+    default: new Date().toDateString(),
+  },
 });
 
 export default model("farmer", Farmer);

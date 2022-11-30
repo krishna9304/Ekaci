@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken";
 import { TOKEN_KEY } from "../constants";
 import { ObjectId } from "mongoose";
 import farmerModel from "../database/models/farmer.model";
+import companyModel from "../database/models/company.model";
 
 export async function fetchMetaData(
   userType: string,
@@ -20,6 +21,9 @@ export async function fetchMetaData(
       });
       break;
     case "company":
+      metadata = await companyModel.findOne({
+        company_id: metamask_address,
+      });
       break;
     case "government":
       break;

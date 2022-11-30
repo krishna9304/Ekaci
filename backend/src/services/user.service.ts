@@ -16,7 +16,7 @@ export const UserServices = {
       const phoneExists = await userModel.exists({ phone: user.phone });
       if (phoneExists) errors.push("This phone number is already in use.");
       const walletAddExists = await userModel.exists({
-        phone: user.metamask_address,
+        metamask_address: user.metamask_address,
       });
       if (walletAddExists)
         errors.push("This metamask address is already in use.");
