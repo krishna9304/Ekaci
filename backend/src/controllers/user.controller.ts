@@ -187,7 +187,7 @@ export const UserController = {
       return res.status(200).json({
         user,
         metadata,
-        newToken,
+        token: newToken,
       });
     } catch (err) {
       const returnVal = new Info(401, "Invalid Token", ResponseTypes._ERROR_);

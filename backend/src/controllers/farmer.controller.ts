@@ -3,6 +3,7 @@ import { compareParams, Info, ResponseTypes } from "../helpers/restHelper";
 import { FarmerInterface } from "../database/models/farmer.model";
 import { farmerFunctions } from "../database/functions/farmer.function";
 import { FarmerServices } from "../services/farmer.service";
+import userModel from "../database/models/user.model";
 
 export const FarmerControlller = {
   async register(
@@ -52,6 +53,11 @@ export const FarmerControlller = {
       const farmer: FarmerInterface = FarmerServices.prepareFarmerData(reqBody);
       const savedFarmerDoc: FarmerInterface = await farmerFunctions.insert(
         farmer
+      );
+
+      await userModel.updateOne(
+        { metamask_address: savedFarmerDoc.farmer_id },
+        { farmer_ref: savedFarmerDoc._id }
       );
 
       return res.status(201).json({
