@@ -16,6 +16,12 @@ export const signUpUser = createAsyncThunk("signupuser", async (body) => {
   let user = res.data.user;
   return user;
 });
+export const signInUser = createAsyncThunk("signinuser", async (body) => {
+  const res = await axios.post(`${config.baseURL}/login`, body);
+  console.log(res.data);
+  let user = res.data.user;
+  return user;
+});
 
 const authSlice = createSlice({
   name: "user",
