@@ -23,7 +23,7 @@ y_test=test[:,0]
 # train the ml model4
 lr.fit(x_train,y_train)
 
-def prediction():
+def check_accuracy():
     # learn the regressor
     # print(lr.predict(data))
     count = 0
