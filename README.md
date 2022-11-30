@@ -72,9 +72,9 @@ npm run start
 
 
 ## Made By
--   <a href="https://github.com/SAHU-01" target="_blank" rel="noreferrer">Ankita Sahu</a> <br>
--   <a href="https://github.com/krishna9304" target="_blank" rel="noreferrer">Krishna Mahato</a> <br>
--   <a href="https://github.com/skpandey885" target="_blank" rel="noreferrer">Sachin Pandey</a> <br>
--   <a href="https://github.com/Zeo-shark" target="_blank" rel="noreferrer">Sourav Bera</a> <br>
+💬 &nbsp; <a href="https://github.com/SAHU-01" target="_blank" rel="noreferrer">Ankita Sahu</a> (Frontend) <br>
+🖥️  &nbsp; <a href="https://github.com/krishna9304" target="_blank" rel="noreferrer">Krishna Mahato</a> (Backend) <br>
+👕   &nbsp; <a href="https://github.com/skpandey885" target="_blank" rel="noreferrer">Sachin Pandey</a> (Blockchain) <br>
+🚀   &nbsp; <a href="https://github.com/Zeo-shark" target="_blank" rel="noreferrer">Sourav Bera</a> (Machine Learning) <br>
 
 
