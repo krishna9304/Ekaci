@@ -29,7 +29,6 @@ const Register = () => {
     dispatch(
       signUpUser({ email, phone, userType, password, metamask_address })
     );
-    console.log({ email, phone, userType, password, metamask_address });
 
     const urls = {
       farmer: "/farmer_register",
