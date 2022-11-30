@@ -7,7 +7,7 @@ const userRouter: Application = Router();
 userRouter.post("/register", UserController.register);
 userRouter.post("/login", UserController.login);
 userRouter.get("/self", UserController.verifyToken);
-userRouter.get("/:phone", Authenticate, UserController.getUser);
+userRouter.get("/:metamask_address", Authenticate, UserController.getUser);
 userRouter.get("/", Authenticate, UserController.getAll);
 
 export default userRouter;
