@@ -1,3 +1,5 @@
+import pickle
+
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LogisticRegression
@@ -22,6 +24,9 @@ y_test=test[:,0]
 
 # train the ml model4
 lr.fit(x_train,y_train)
+# Saved the model file
+filename = 'disaster_predict.sav'
+pickle.dump(lr, open(filename, 'wb'))
 
 def check_accuracy():
     # learn the regressor
@@ -32,7 +37,13 @@ def check_accuracy():
             count += 1
     print("accuracy:" + str((count / x_test.shape[0]) * 100))
 
+    # load the model file
+    loaded_model = pickle.load(open('disaster_predict.sav', 'rb'))
+    result = loaded_model.score(x_test, y_test)
+    print(result)
+
+
 def make_prediction(data):
     print((lr.predict(data)))
 
-prediction()
+check_accuracy()
