@@ -1,6 +1,5 @@
 import userModel, { UserInterface } from "../database/models/user.model";
 import validator from "validator";
-import { FarmerInterface } from "../database/models/farmer.model";
 
 export const UserServices = {
   async checkConflicts(user: UserInterface) {
@@ -25,17 +24,5 @@ export const UserServices = {
       errors.push(JSON.stringify(err));
     }
     return errors;
-  },
-
-  prepareUserData(farmer: FarmerInterface) {
-    if (!Object.keys(farmer).includes("avatar")) {
-      const words = [farmer.first_name, farmer.last_name];
-      const avatarLink = `https://avatar.tobi.sh/tobiaslins.svg?text=${
-        words[0][0].toUpperCase() +
-        (words.length > 1 ? words[1][0].toUpperCase() : "")
-      }`;
-      farmer.avatar = avatarLink;
-    }
-    return farmer;
   },
 };
