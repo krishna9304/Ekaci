@@ -30,3 +30,31 @@ state = {name:i for i, name in enumerate(sorted(set(data[:,0])))}
 print(state)
 df=pd.DataFrame(data[:,:14]).replace(state)
 df.to_csv("data.csv")
+
+data2=np.array(df)
+print(data2[:200])
+x=[]
+# x=np.array(x)
+y=[]
+# y=np.array(y)
+count=0 #count max =35
+flood_min=254
+for i in range(36):
+    print(data2[:,0],i)
+    temp=data2[data2[:,0]==i][:,2:].flatten()
+    temp=np.array(temp)
+    for j in range(temp.shape[0]):
+        x.append([i,temp[j]])
+    print(temp)
+    for j in range(temp.shape[0]):
+        noise = 25 * np.random.normal(0, 0.45)
+        if (temp[j] >= 354 + noise):
+            y.append(3)
+        elif (temp[j] > 204 - abs(noise) and temp[j] <= 254):
+            y.append(1)
+        elif (temp[j] > 254 and temp[j] < 354 + noise):
+            y.append(2)
+        else:
+            y.append(0)
+    # y=np.concatenate((y,i*np.ones((temp.shape[0],1)).flatten()))
+# print(x.shape,y.shape)
