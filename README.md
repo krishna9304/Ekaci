@@ -1,5 +1,7 @@
 <img align="center" src="https://i.postimg.cc/FKQ9ZQsq/EKACI-By-Kalinga-Coders.png" alt="iamsachin_47" height="210" width="230" /> 
 
+# Project Under 'Smart Odisha Hackathon 2022'
+
 ## Details
 The <b>Government of Odisha </b>has enrolled multiple farmers across the state under the <b>Pradhan Mantri Fasal Bima Yojana (PMFBY)</b> this year. The number of enrollments has been increasing every year and the Government hopes <b>to reach more farmers in a short time</b>. 
 
