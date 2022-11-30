@@ -1,12 +1,15 @@
 // SPDX-License-Identifier: UNLICENSED
+
 pragma solidity >=0.8.0;
 
 /*
+
 1. ["1234", "20,200", ["to be settled by company", true], ["Rabi", "Rice", "Water logging", "Summer"], ["url1", "url2", "url3"], true, "34.7", "Natural Disaster", "2 Oct", "1 Mar", "3 Dec"]
 2. 1234,20,200,to be settled by company,true,Rabi,Rice,Water logging,Summer,url1,url2,url3,true,34.7,Natural Disaster,2 Oct,1 Mar,3 Dec
 3. 1234,0x,0x,true,0x,0x,0x,0x,0x,true,0x,0x,0x,0x,0x
 
 */
+
 
 // Deployed to 0x1011CFf3a19bc046725002B95811e2F5FbCA7Be8
 
