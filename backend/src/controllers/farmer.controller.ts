@@ -1,19 +1,19 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import { compareParams, Info, ResponseTypes } from "../helpers/restHelper";
 import { FarmerInterface } from "../database/models/farmer.model";
 import { farmerFunctions } from "../database/functions/farmer.function";
 import { FarmerServices } from "../services/farmer.service";
 import userModel from "../database/models/user.model";
+import { RequestJwt } from "../middlewares/jwt";
 
 export const FarmerControlller = {
   async register(
-    req: Request,
+    req: RequestJwt,
     res: Response,
     next: NextFunction
   ): Promise<Response<any, Record<string, any>> | undefined> {
     const reqBody: any = req.body;
     const paramsReq: Array<string> = [
-      "farmer_id",
       "first_name",
       "middle_name",
       "last_name",
@@ -40,6 +40,7 @@ export const FarmerControlller = {
       return res.status(returnVal.getCode()).json(returnVal.getArray());
     }
     try {
+      reqBody.farmer_id = req.user?.metamask_address;
       const errors: String[] = await FarmerServices.checkConflicts(reqBody);
       if (errors.length) {
         const returnVal = new Info(
@@ -60,9 +61,7 @@ export const FarmerControlller = {
         { farmer_ref: savedFarmerDoc._id }
       );
 
-      return res.status(201).json({
-        farmer_data: savedFarmerDoc,
-      });
+      return res.status(201).json(savedFarmerDoc);
     } catch (error) {
       next(error);
     }

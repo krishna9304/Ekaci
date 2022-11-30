@@ -208,6 +208,7 @@ export const UserController = {
       const { metamask_address } = req.params;
       const users = await UserFunctions.get({ metamask_address });
       if (users.length) {
+        const metadata = fetchMetaData(users[0].userType, metamask_address);
         return res.status(200).json(users[0]);
       } else {
         const returnVal = new Info(

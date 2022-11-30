@@ -5,5 +5,10 @@ import Authenticate from "../middlewares/jwt";
 const companyRouter: Application = Router();
 
 companyRouter.post("/register", Authenticate, CompanyController.register);
+companyRouter.post(
+  "/insurance/create",
+  Authenticate,
+  CompanyController.createInsurance
+);
 
 export default companyRouter;
