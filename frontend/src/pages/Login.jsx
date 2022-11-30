@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../assets/logo_white_2.png";
 import Image from "../assets/register.png";
 import { signInUser } from "../redux/authSlice";
@@ -7,15 +7,16 @@ import { useDispatch, useSelector } from "react-redux";
 const Login = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-
+  const user = useSelector((state) => state.authReducer.user);
   const dispatch = useDispatch();
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log(phone, password);
-    const data = useSelector(dispatch(signInUser({ phone, password })));
-    console.log(data.farmer_ref);
+    dispatch(signInUser({ phone, password }));
   };
 
+  useEffect(() => {
+    if (user) console.log(user);
+  }, [user]);
   return (
     <div className=" flex flex-row h-screen">
       <div className="flex flex-col w-1/3 p-5 gap-20 my-10">

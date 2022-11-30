@@ -3,23 +3,19 @@ import axios from "axios";
 import config from "../config";
 
 const initialState = {
-  msg: "",
-  user: "",
-  token: "",
-  loading: false,
-  error: "",
+  user: null,
 };
 
 export const signUpUser = createAsyncThunk("signupuser", async (body) => {
   const res = await axios.post(`${config.baseURL}/register`, body);
-  console.log(res.data);
   let user = res.data.user;
+  document.cookie += "jwt=" + res.data.token;
   return user;
 });
 export const signInUser = createAsyncThunk("signinuser", async (body) => {
   const res = await axios.post(`${config.baseURL}/login`, body);
-  console.log(res.data);
   let user = res.data.user;
+  document.cookie = "jwt=" + res.data.token;
   return user;
 });
 
@@ -29,6 +25,9 @@ const authSlice = createSlice({
   reducers: {
     addToken: (state, action) => {
       state.token = localStorage.getItem("token");
+    },
+    setUser: (state, action) => {
+      state.user = action.payload;
     },
   },
   extraReducers: {
@@ -48,5 +47,5 @@ const authSlice = createSlice({
     },
   },
 });
-
+export const { addToken, setUser } = authSlice.actions;
 export default authSlice.reducer;
