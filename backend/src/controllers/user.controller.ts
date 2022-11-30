@@ -4,10 +4,30 @@ import { UserServices } from "../services/user.service";
 import { UserFunctions } from "../database/functions/user.function";
 import userModel, { UserInterface } from "../database/models/user.model";
 import jwt from "jsonwebtoken";
-import { SERVER_URL, TOKEN_KEY } from "../constants";
+import { TOKEN_KEY } from "../constants";
 import { ObjectId } from "mongoose";
-import { RequestJwt } from "../middlewares/jwt";
 import farmerModel from "../database/models/farmer.model";
+
+export async function fetchMetaData(
+  userType: string,
+  metamask_address: string
+) {
+  let metadata = null;
+  switch (userType) {
+    case "farmer":
+      metadata = await farmerModel.findOne({
+        farmer_id: metamask_address,
+      });
+      break;
+    case "company":
+      break;
+    case "government":
+      break;
+    default:
+      break;
+  }
+  return metadata;
+}
 
 export const UserController = {
   async register(
@@ -21,6 +41,7 @@ export const UserController = {
       "password",
       "phone",
       "metamask_address",
+      "userType",
     ];
     const errors: String[] = compareParams(paramsReq, reqBody);
     if (errors.length) {
@@ -65,24 +86,6 @@ export const UserController = {
     }
   },
 
-  async fetchMetaData(userType: string, metamask_address: string) {
-    let metadata = null;
-    switch (userType) {
-      case "farmer":
-        metadata = await farmerModel.findOne({
-          farmer_id: metamask_address,
-        });
-        break;
-      case "company":
-        break;
-      case "government":
-        break;
-      default:
-        break;
-    }
-    return metadata;
-  },
-
   async login(
     req: Request,
     res: Response,
@@ -123,12 +126,13 @@ export const UserController = {
               expiresIn: "2d",
             }
           );
-          const metadata = this.fetchMetaData(
+          const metadata = await fetchMetaData(
             user.userType,
             user.metamask_address
           );
           return res.status(200).json({
-            user: { ...user, metadata },
+            user,
+            metadata,
             token,
           });
         } else {
@@ -176,9 +180,13 @@ export const UserController = {
           expiresIn: "2d",
         }
       );
-      const metadata = this.fetchMetaData(user.userType, user.metamask_address);
+      const metadata = await fetchMetaData(
+        user.userType,
+        user.metamask_address
+      );
       return res.status(200).json({
-        user: { ...user, metadata },
+        user,
+        metadata,
         newToken,
       });
     } catch (err) {
@@ -200,7 +208,7 @@ export const UserController = {
       } else {
         const returnVal = new Info(
           404,
-          "Invalid userId.",
+          "Invalid user identifier.",
           ResponseTypes._ERROR_
         );
         return res.status(returnVal.getCode()).json(returnVal.getArray());
