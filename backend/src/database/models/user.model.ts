@@ -22,7 +22,7 @@ export interface UserInterface extends Document {
   phoneVerified: boolean;
   farmer_ref: Mixed | StringSchemaDefinition | undefined;
   company_ref: Mixed | StringSchemaDefinition | undefined;
-  metadata: undefined;
+  metadata?: Object | null;
   created_on: string;
   updated_on: string;
 }
