@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { StepperContext } from "../../contexts/StepperContext";
-import { AiFillDelete } from "react-icons/ai";
 
 const Custom = () => {
   const { setUserData } = useContext(StepperContext);
@@ -70,9 +69,7 @@ const Custom = () => {
               className="border m-5 p-2"
               placeholder="Value"
             />
-            <button onClick={() => handleRemoveFields(index)}>
-              <AiFillDelete />
-            </button>
+            <button onClick={() => handleRemoveFields(index)}>Delete</button>
           </div>
         ))}
       </form>

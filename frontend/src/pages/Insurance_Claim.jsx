@@ -12,6 +12,10 @@ import { useCookies } from "react-cookie";
 import config from "../config";
 import axios from "axios";
 import Check from "../components/steps/Check";
+import { useSelector } from "react-redux";
+import insuranceClaimContract from "../blockchain/interaction";
+import Web3 from "web3";
+import { toast } from "react-toastify";
 
 export const cropImages = {
   img1: "",
@@ -40,6 +44,7 @@ const Insurance_Claim = () => {
   const [userData, setUserData] = useState(initialClaimData);
   const [partData, setPartData] = useState({});
   const [cookies] = useCookies(["jwt"]);
+  const user = useSelector((state) => state.authReducer.user);
 
   const steps = ["Claim Info", "Claim Images", "Crop Details", "Check", "Done"];
 
@@ -70,6 +75,56 @@ const Insurance_Claim = () => {
     }
   };
 
+  const claimObjTranslation = (claim) => {
+    let boolArr = [true, false, false, false, false, false, false];
+
+    let cropDetailsArray = [
+      claim.crop_details.crop_type,
+      claim.crop_details.crop_name,
+      claim.crop_details.irrigation_methods,
+      claim.crop_details.season,
+    ];
+
+    let arr = [
+      claim.insurance_id,
+      claim.claimant_id,
+      claim.payments,
+      boolArr,
+      cropDetailsArray,
+      claim.site_images,
+      claim.is_active,
+      claim.loss_percent,
+      claim.loss_type,
+      claim.date_of_loss,
+      claim.created_on,
+      claim.updated_on,
+    ];
+
+    return arr;
+  };
+
+  const setClaimFunc = async (icContract, arr, address) => {
+    try {
+      const data = await icContract.methods
+        .setClaim(arr)
+        .send({ from: address });
+      console.log("Blockchain->", data);
+    } catch (err) {
+      console.log("Error-> ", err);
+    }
+  };
+
+  const storeClaimBlockchain = async (claim) => {
+    if (window.ethereum) {
+      const address = user.metamask_address;
+      const web3Obj = new Web3(window.ethereum);
+      const ic = insuranceClaimContract(web3Obj);
+      await setClaimFunc(ic, claimObjTranslation(claim), address);
+    } else {
+      toast("Install metamask", { type: "error" });
+    }
+  };
+
   const handleClaimRequest = async () => {
     if (document.cookie) {
       try {
@@ -78,7 +133,7 @@ const Insurance_Claim = () => {
           userData,
           { headers: { "x-access-token": cookies.jwt } }
         );
-        console.log(res.data);
+        storeClaimBlockchain(res.data);
       } catch (error) {
         console.log(error);
       }

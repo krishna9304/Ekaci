@@ -1,10 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
-import { AiFillCloseCircle } from "react-icons/ai";
-import { Link, Route, Routes } from "react-router-dom";
-import { HiMenu } from "react-icons/hi";
+import React, { useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Logo from "../assets/logo_no.png";
-import Carousel from "../components/Carousel";
 import { useSelector } from "react-redux";
 
 const Farmer_Dashboard = () => {
@@ -22,11 +19,6 @@ const Farmer_Dashboard = () => {
       </div>
       <div className="flex md:hidden flex-row">
         <div className="p-2 w-full flex flex-row justidy-between items-center shadow-md">
-          <HiMenu
-            fontSize={40}
-            className="cursor-pointer"
-            onClick={() => setToggleSidebar(true)}
-          />
           <Link to="/">
             <img src={Logo} alt="logo" className="w-32" />
           </Link>
@@ -34,11 +26,12 @@ const Farmer_Dashboard = () => {
         {toggleSidebar && (
           <div className="fixed w-4/5 bg-white h-screen overflow-y-auto shadow-md z-10 animate-slide-in">
             <div className="absolute w-full flex justify-end items-center p-2">
-              <AiFillCloseCircle
+              <button
                 className="cursor-pointer text-white"
-                fontSize={30}
                 onClick={() => setToggleSidebar(false)}
-              />
+              >
+                X
+              </button>
             </div>
             <Sidebar closeToggle={setToggleSidebar} />
           </div>
@@ -50,7 +43,7 @@ const Farmer_Dashboard = () => {
         ref={scrollRef}
       >
         {/* open area for content */}
-        <Carousel />
+        {/* <Carousel /> */}
         <div className="grid grid-cols-2 m-10 mt-20">
           <Link to="/insurance_claim">
             <div className=" w-96 h-40 rounded-lg mb-5 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-3xl text-white p-5 pt-24">

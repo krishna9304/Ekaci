@@ -9,20 +9,19 @@ const Claim_Info = () => {
   };
   return (
     <div className="flex flex-col">
-      {/* Insurance_id */}
-      {/* <div className="font-bold h-6 mt-3 text-gray-500 text-xs leading-8 uppercase">
-        Crop Type
+      <div className="font-bold h-6 mt-3 text-gray-500 text-xs leading-8 uppercase">
+        Insurance Id
       </div>
       <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
         <input
           onChange={handleChange}
-          value={partData["crop_type"] || ""}
-          name="crop_type"
-          placeholder="Crop Type"
+          value={partData["insurance_id"] || ""}
+          name="insurance_id"
+          placeholder="Insurance ID"
           type="text"
           className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
         />
-      </div> */}
+      </div>
       {/* drop down auto fill all farmer's insurances */}
       {/* loss_percent */}
       {/* loss type */}

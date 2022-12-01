@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
-import { RiHomeFill } from "react-icons/ri";
 
 import Logo from "../assets/logo_no.png";
 
@@ -32,7 +31,6 @@ const Sidebar = ({ closeToggle }) => {
             }
             onClick={handleCloseSidebar}
           >
-            <RiHomeFill />
             Home
           </NavLink>
           <NavLink

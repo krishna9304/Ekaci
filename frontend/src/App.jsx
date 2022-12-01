@@ -16,6 +16,10 @@ import Create_Insurance from "./pages/Create_Insurance";
 import Farmer_Dashboard from "./pages/Farmer_Dashboard";
 import State_Dashboard from "./pages/State_Dashboard";
 import Insurance_Dashboard from "./pages/Insurance_Dashboard";
+import Insurance_Purchase from "./pages/Insurance_Purchase";
+import { Insurance_buy } from "./pages/insurance_buy";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [cookies] = useCookies(["jwt"]);
@@ -66,7 +70,13 @@ function App() {
         <Route path="/farmer_dashboard" element={<Farmer_Dashboard />} />
         <Route path="/government_dashboard" element={<State_Dashboard />} />
         <Route path="/insurance_dashboard" element={<Insurance_Dashboard />} />
+        <Route path="/insurance_purchase" element={<Insurance_Purchase />} />
+        <Route
+          path="/insurance/buy/:insurance_id"
+          element={<Insurance_buy />}
+        />
       </Routes>
+      <ToastContainer />
     </>
   );
 }
