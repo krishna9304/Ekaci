@@ -1,34 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import "./App.css";
+import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Farmer_Register from "./pages/Farmer_Register";
+import Insurance_Registeration from "./pages/Insurance_Registeration";
+import Government_Registeration from "./pages/Government_Register";
+import Insurance_Claim from "./pages/Insurance_Claim";
+import axios from "axios";
+import config from "./config";
+import { useCookies } from "react-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "./redux/authSlice";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [cookies] = useCookies(["jwt"]);
+  let dispatch = useDispatch();
+  const globalState = useSelector((state) => state);
+  let authUser = async () => {
+    if (document.cookie) {
+      let token;
+      token = cookies.jwt;
+      if (token) {
+        const res = await axios.get(`${config.baseURL}/self`, {
+          headers: { "x-access-token": token },
+        });
+        const user = res.data.user;
+        dispatch(setUser(user));
+        document.cookie = "jwt=" + res.data.token;
+      }
+    }
+  };
+
+  useEffect(() => {
+    authUser();
+    return () => {};
+  }, []);
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <>
+      <Routes>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/farmer_register" element={<Farmer_Register />} />
+        <Route
+          path="/insurance_register"
+          element={<Insurance_Registeration />}
+        />
+        <Route
+          path="/government_register"
+          element={<Government_Registeration />}
+        />
+        <Route path="/insurance_claim" element={<Insurance_Claim />} />
+      </Routes>
+    </>
+  );
 }
 
-export default App
+export default App;

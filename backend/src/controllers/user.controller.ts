@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken";
 import { TOKEN_KEY } from "../constants";
 import { ObjectId } from "mongoose";
 import farmerModel from "../database/models/farmer.model";
+import companyModel from "../database/models/company.model";
 
 export async function fetchMetaData(
   userType: string,
@@ -20,6 +21,9 @@ export async function fetchMetaData(
       });
       break;
     case "company":
+      metadata = await companyModel.findOne({
+        company_id: metamask_address,
+      });
       break;
     case "government":
       break;
@@ -187,7 +191,7 @@ export const UserController = {
       return res.status(200).json({
         user,
         metadata,
-        newToken,
+        token: newToken,
       });
     } catch (err) {
       const returnVal = new Info(401, "Invalid Token", ResponseTypes._ERROR_);
@@ -204,6 +208,7 @@ export const UserController = {
       const { metamask_address } = req.params;
       const users = await UserFunctions.get({ metamask_address });
       if (users.length) {
+        const metadata = fetchMetaData(users[0].userType, metamask_address);
         return res.status(200).json(users[0]);
       } else {
         const returnVal = new Info(

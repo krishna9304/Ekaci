@@ -48,7 +48,9 @@ export interface FarmerInterface extends Document {
   farmer_type: "small" | "marginal" | "others";
   farmer_category: "owner" | "tenant" | "shared-cropping";
   bank_details: bankDetails;
-  crop_details: cropDetails;
+  crop_details: Array<cropDetails>;
+  created_on: string;
+  updated_on: string;
 }
 
 const Farmer = new Schema<FarmerInterface>({
@@ -105,23 +107,31 @@ const Farmer = new Schema<FarmerInterface>({
     type: String,
     required: true,
     default: "small",
-    enum: ["small", "marginal", "others"],
   },
   farmer_category: {
     type: String,
     required: true,
     default: "owner",
-    enum: ["owner", "tenant", "shared-cropping"],
   },
   bank_details: {
     type: Object,
     required: true,
     default: {},
   },
-  crop_details: {
-    type: Object,
-    required: true,
-    default: {},
+  crop_details: [
+    {
+      type: Object,
+      required: true,
+      default: {},
+    },
+  ],
+  created_on: {
+    type: String,
+    default: new Date().toDateString(),
+  },
+  updated_on: {
+    type: String,
+    default: new Date().toDateString(),
   },
 });
 
