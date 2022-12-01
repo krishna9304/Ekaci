@@ -9,6 +9,13 @@ import { ClaimService } from "../services/claim.service";
 import { ClaimFunctions } from "../database/functions/claim.function";
 import { ClaimInterface, trackStatus } from "../database/models/claim.model";
 import { SERVER_URL } from "../constants";
+import insuranceModel, {
+  InsuranceInterface,
+} from "../database/models/insurance.model";
+import mongoose from "mongoose";
+import { InsuranceSubscriptionInterface } from "../database/models/insuranceSubscribed.model";
+import { InsuranceFunctions } from "../database/functions/insurance.function";
+import { insuranceSubscriptionFunctions } from "../database/functions/insuranceSubscribed.function";
 
 export const FarmerControlller = {
   async register(
@@ -146,12 +153,7 @@ export const FarmerControlller = {
     next: NextFunction
   ): Promise<Response<any, Record<string, any>> | undefined> {
     const reqBody: any = req.body;
-    const paramsReq: Array<string> = [
-      "insurance_id",
-      "farmer_id",
-      "payments_done",
-      "total_payments",
-    ];
+    const paramsReq: Array<string> = ["insurance_id", "farmer_id"];
     const errors: String[] = compareParams(paramsReq, reqBody);
     if (errors.length) {
       const returnVal = new Info(
@@ -161,6 +163,46 @@ export const FarmerControlller = {
         ResponseTypes._ERROR_
       );
       return res.status(returnVal.getCode()).json(returnVal.getArray());
+    }
+
+    if (req.user?.userType !== "farmer" || !req.user.farmer_ref) {
+      const returnVal = new Info(
+        401,
+        "Illegal request.",
+        ResponseTypes._ERROR_
+      );
+      return res.status(returnVal.getCode()).json(returnVal.getArray());
+    }
+
+    try {
+      const insuranceExists = await insuranceModel.exists({
+        _id: new mongoose.Types.ObjectId(reqBody.insurance_id + ""),
+      });
+
+      if (!insuranceExists) {
+        const returnVal = new Info(
+          401,
+          "Invalid Insurance id.",
+          ResponseTypes._ERROR_
+        );
+        return res.status(returnVal.getCode()).json(returnVal.getArray());
+      }
+
+      const insurance: InsuranceInterface | null =
+        await insuranceModel.findById(
+          new mongoose.Types.ObjectId(reqBody.insurance_id + "")
+        );
+
+      reqBody.payments_done = "1";
+      reqBody.total_payments = String(
+        Math.round(Number(insurance?.total_amount) / Number(insurance?.premium))
+      );
+
+      const savedInsuranceSubscriptionDoc: InsuranceSubscriptionInterface =
+        await insuranceSubscriptionFunctions.insert(reqBody);
+      return res.status(201).json(savedInsuranceSubscriptionDoc);
+    } catch (error) {
+      next(error);
     }
   },
 };

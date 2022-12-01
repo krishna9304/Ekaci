@@ -1,5 +1,4 @@
 import { Document, model, ObjectId, Schema } from "mongoose";
-import { cropDetails } from "./farmer.model";
 
 export interface InsuranceSubscriptionInterface extends Document {
   _id: ObjectId;
@@ -22,11 +21,11 @@ const InsuranceSubscription = new Schema<InsuranceSubscriptionInterface>({
   },
   payments_done: {
     type: String,
-    required: true,
+    required: false,
   },
   total_payments: {
     type: String,
-    required: true,
+    required: false,
   },
   created_on: {
     type: String,
