@@ -16,6 +16,7 @@ export interface InsuranceInterface extends Document {
   total_amount: string;
   covered_crops: Array<string>;
   company_ref: Mixed | StringSchemaDefinition | undefined;
+  metadata: any;
   created_on: string;
   updated_on: string;
 }
@@ -50,6 +51,10 @@ const Insurance = new Schema<InsuranceInterface>({
   company_ref: {
     type: Schema.Types.ObjectId,
     required: true,
+  },
+  metadata: {
+    type: Object,
+    required: false,
   },
   created_on: {
     type: String,
