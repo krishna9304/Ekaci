@@ -75,7 +75,7 @@ const Claim = new Schema<ClaimInterface>({
   site_images: [
     {
       type: String,
-      required: true,
+      required: false,
     },
   ],
   is_active: {
