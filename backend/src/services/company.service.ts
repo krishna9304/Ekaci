@@ -21,14 +21,6 @@ export const CompanyServices = {
       errors.push("A company already exists with the same company_id");
       return errors;
     }
-
-    const excludedKeysCheck: Array<String> = [];
-    for (let key of Object.keys(company)) {
-      if (!excludedKeysCheck.includes(key)) {
-        if (!company[key as keyof typeof company].trim().length)
-          errors.push(`${key} is a required parameter.`);
-      }
-    }
     return errors;
   },
 

@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components{
+    .card{
+        @apply w-72 cursor-pointer border-b-4 rounded-md bg-gradient-to-t from-white/20 h-44 text-center px-3 py-7 self-end;
+    }
+    .card-active{
+        @apply h-60
+    }
+    .para{
+        @apply mt-3
+    }
+}

@@ -6,18 +6,19 @@ const initialState = {
   user: null,
 };
 
-export const signUpUser = createAsyncThunk("signupuser", async (body) => {
+export const signUpUser = async (body) => {
   const res = await axios.post(`${config.baseURL}/user/register`, body);
   let user = res.data.user;
   document.cookie += "jwt=" + res.data.token;
   return user;
-});
-export const signInUser = createAsyncThunk("signinuser", async (body) => {
+};
+export const signInUser = async (body) => {
   const res = await axios.post(`${config.baseURL}/user/login`, body);
   let user = res.data.user;
+  user.metadata = res.data.metadata;
   document.cookie = "jwt=" + res.data.token;
   return user;
-});
+};
 
 const authSlice = createSlice({
   name: "user",

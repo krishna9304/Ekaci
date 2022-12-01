@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "../assets/register.png";
 import Logo from "../assets/logo_white_2.png";
-import { useDispatch } from "react-redux";
-import { signUpUser } from "../redux/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser, signUpUser } from "../redux/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
@@ -13,6 +13,7 @@ const Register = () => {
   const [userType, setUserType] = useState("");
   const [password, setPassword] = useState("");
   const [metamask_address, setMetamask_address] = useState("");
+  const user = useSelector((state) => state.authReducer.user);
   const [style, setStyle] = useState({
     backgroundColor: "#38BDF8",
     borderRadius: "6px",
@@ -24,10 +25,12 @@ const Register = () => {
 
   const dispatch = useDispatch();
 
-  const registerHandle = (e) => {
+  const registerHandle = async (e) => {
     e.preventDefault();
     dispatch(
-      signUpUser({ email, phone, userType, password, metamask_address })
+      setUser(
+        await signUpUser({ email, phone, userType, password, metamask_address })
+      )
     );
 
     const urls = {
@@ -59,6 +62,18 @@ const Register = () => {
       console.log("Please Install Metamask Extension");
     }
   };
+
+  useEffect(() => {
+    if (user && user.metadata) {
+      if (user.userType == "farmer") navigate("/farmer_dashboard");
+      if (user.userType == "company") navigate("/insurance_dashboard");
+    }
+    if (user && !user.metadata) {
+      if (user.userType == "farmer") navigate("/farmer_register");
+      if (user.userType == "company") navigate("/insurance_register");
+    }
+    return () => {};
+  }, [user]);
 
   return (
     <div className=" flex flex-row h-screen">
