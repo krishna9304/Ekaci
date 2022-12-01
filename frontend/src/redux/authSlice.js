@@ -7,13 +7,13 @@ const initialState = {
 };
 
 export const signUpUser = createAsyncThunk("signupuser", async (body) => {
-  const res = await axios.post(`${config.baseURL}/register`, body);
+  const res = await axios.post(`${config.baseURL}/user/register`, body);
   let user = res.data.user;
   document.cookie += "jwt=" + res.data.token;
   return user;
 });
 export const signInUser = createAsyncThunk("signinuser", async (body) => {
-  const res = await axios.post(`${config.baseURL}/login`, body);
+  const res = await axios.post(`${config.baseURL}/user/login`, body);
   let user = res.data.user;
   document.cookie = "jwt=" + res.data.token;
   return user;
