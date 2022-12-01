@@ -205,4 +205,42 @@ export const FarmerControlller = {
       next(error);
     }
   },
+
+  async getInsurances(
+    req: RequestJwt,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<any, Record<string, any>> | undefined> {
+    const reqBody: any = req.body;
+    try {
+      const insurances = await InsuranceFunctions.get({ ...reqBody });
+      return res.status(200).json(insurances);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async getInsuranceById(
+    req: RequestJwt,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<any, Record<string, any>> | undefined> {
+    const { insurance_id } = req.params;
+    try {
+      const insurance: InsuranceInterface | null =
+        await InsuranceFunctions.getById(insurance_id);
+      if (insurance) {
+        return res.status(200).json(insurance);
+      } else {
+        const returnVal = new Info(
+          404,
+          "Invalid insurance identifier.",
+          ResponseTypes._ERROR_
+        );
+        return res.status(returnVal.getCode()).json(returnVal.getArray());
+      }
+    } catch (error) {
+      next(error);
+    }
+  },
 };

@@ -22,5 +22,15 @@ farmerRouter.post(
   Authenticate,
   FarmerControlller.buyInsurance
 );
+farmerRouter.post(
+  "/insurance/get",
+  Authenticate,
+  FarmerControlller.getInsurances
+);
+farmerRouter.get(
+  "/insurance/:insurance_id",
+  Authenticate,
+  FarmerControlller.getInsuranceById
+);
 
 export default farmerRouter;
