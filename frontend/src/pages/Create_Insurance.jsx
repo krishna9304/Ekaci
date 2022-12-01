@@ -3,9 +3,12 @@ import Stepper from "../components/Stepper";
 import StepperControl from "../components/StepperControl";
 import { StepperContext } from "../contexts/StepperContext";
 import Done from "../components/steps/Done";
+import Custom from "../components/steps/Custom";
 
 import Background from "../assets/background_register.jpg";
 import Policy_Details from "../components/steps/Policy_Details";
+import Check from "../components/steps/Check";
+import axios from "axios";
 
 const Create_Insurance = () => {
   const initialCreateInsuranceData = {
@@ -21,16 +24,24 @@ const Create_Insurance = () => {
   const [userData, setUserData] = useState(initialCreateInsuranceData);
   const [partData, setPartData] = useState({});
 
-  const steps = ["Policy_Details", "Done"];
+  const steps = ["Policy_Details", "Custom", "Check", "Done"];
 
   const displayStep = (step) => {
     switch (step) {
       case 1:
         return <Policy_Details />;
       case 2:
+        return <Custom />;
+      case 3:
+        return <Check />;
+      case 4:
         return <Done />;
       default:
     }
+  };
+
+  const handleCreateInsurance = async () => {
+    // const res = await axios.post()
   };
 
   const handleClick = (direction) => {
@@ -39,15 +50,11 @@ const Create_Insurance = () => {
     direction === "next" ? newStep++ : newStep--;
     newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
 
-    setUserData({ ...userData, [stepStr(currentStep)]: partData });
+    setUserData({ ...userData, [displayStep(currentStep)]: partData });
     setPartData({});
+
+    if (currentStep == 3) handleCreateInsurance();
   };
-
-  useEffect(() => {
-    console.log(userData);
-
-    return () => {};
-  }, [userData]);
 
   return (
     <div>

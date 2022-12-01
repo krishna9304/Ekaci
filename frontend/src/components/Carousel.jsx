@@ -32,13 +32,12 @@ const Carousel = () => {
                 <div
                   className={`card ${
                     active === i && "card-active"
-                  } to-green-900/40 ${text.color} border-red-600`}
+                  } to-green-900/40 ${text.color} border-green-600`}
                 >
                   <h2 className="text-3xl mt-2 font-semibold ">{text.name}</h2>
                   <p className="para text-sm">
                     Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s
+                    typesetting industry.
                   </p>
                 </div>
               </div>

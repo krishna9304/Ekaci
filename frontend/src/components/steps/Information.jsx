@@ -39,21 +39,6 @@ const Information = () => {
         />
       </div>
 
-      {/* Verified */}
-      <div className="font-bold h-6 mt-3 text-gray-500 text-xs leading-8 uppercase">
-        Verfied
-      </div>
-      <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
-        <input
-          onChange={handleChange}
-          value={userData["is_verified"] || ""}
-          name="is_verified"
-          placeholder="Verified"
-          type="text"
-          className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
-        />
-      </div>
-
       {/* Documents */}
       <div className="font-bold h-6 mt-3 text-gray-500 text-xs leading-8 uppercase">
         Documents
