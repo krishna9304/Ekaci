@@ -2,10 +2,10 @@ import React, { useContext } from "react";
 import { StepperContext } from "../../contexts/StepperContext";
 
 const Claim_Info = () => {
-  const { partData, setPartData } = useContext(StepperContext);
+  const { userData, setUserData } = useContext(StepperContext);
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setPartData({ ...partData, [name]: value });
+    setUserData({ ...userData, [name]: value });
   };
   return (
     <div className="flex flex-col">
@@ -15,7 +15,7 @@ const Claim_Info = () => {
       <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
         <input
           onChange={handleChange}
-          value={partData["insurance_id"] || ""}
+          value={userData["insurance_id"] || ""}
           name="insurance_id"
           placeholder="Insurance ID"
           type="text"
@@ -32,7 +32,7 @@ const Claim_Info = () => {
         <select
           id="loss_type"
           name="loss_type"
-          value={partData["loss_type"] || ""}
+          value={userData["loss_type"] || ""}
           onChange={handleChange}
           className="p-1 px-2  outline-none w-full text-gray-800"
         >
@@ -49,7 +49,7 @@ const Claim_Info = () => {
       <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
         <input
           onChange={handleChange}
-          value={partData["date_of_loss"] || ""}
+          value={userData["date_of_loss"] || ""}
           name="date_of_loss"
           placeholder="Date of Loss"
           type="date"

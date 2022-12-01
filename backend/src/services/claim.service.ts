@@ -14,8 +14,8 @@ export const ClaimService = {
       return errors;
     }
 
-    if (claim["site_images"].length < 5)
-      errors.push("Please upload atleast 5 images of the destroyed farm land.");
+    // if (claim["site_images"].length < 5)
+    //   errors.push("Please upload atleast 5 images of the destroyed farm land.");
     return errors;
   },
 };

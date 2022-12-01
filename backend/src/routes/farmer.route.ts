@@ -13,7 +13,7 @@ farmerRouter.post(
 );
 farmerRouter.post(
   "/claim/create",
-  upload.array("site_images", 5),
+  upload.array("site_images"),
   Authenticate,
   FarmerControlller.createClaim
 );

@@ -33,10 +33,11 @@ export const cropDetails = {
 };
 
 const initialClaimData = {
-  loss_type: "",
-  date_of_loss: "",
-  crop_details: cropDetails,
-  site_images: cropImages,
+  insurance_id: null,
+  loss_type: null,
+  date_of_loss: null,
+  crop_details: null,
+  site_images: null,
 };
 
 const Insurance_Claim = () => {
@@ -64,14 +65,28 @@ const Insurance_Claim = () => {
     }
   };
 
+  const fetchLossPercent = async () => {
+    try {
+      setTimeout(() => {
+        return "89";
+      }, 1000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchLossPercent();
+
+    return () => {};
+  }, []);
+
   const stepStr = (step) => {
     switch (step) {
       case 3:
         return "crop_details";
       case 2:
         return "site_images";
-      default:
-        return "";
     }
   };
 
@@ -81,7 +96,7 @@ const Insurance_Claim = () => {
     let cropDetailsArray = [
       claim.crop_details.crop_type,
       claim.crop_details.crop_name,
-      claim.crop_details.irrigation_methods,
+      claim.crop_details.irrigation_method,
       claim.crop_details.season,
     ];
 
@@ -108,7 +123,7 @@ const Insurance_Claim = () => {
       const data = await icContract.methods
         .setClaim(arr)
         .send({ from: address });
-      console.log("Blockchain->", data);
+      toast("Claim Payload stored in blockchain.", { type: "success" });
     } catch (err) {
       console.log("Error-> ", err);
     }
@@ -119,7 +134,9 @@ const Insurance_Claim = () => {
       const address = user.metamask_address;
       const web3Obj = new Web3(window.ethereum);
       const ic = insuranceClaimContract(web3Obj);
-      await setClaimFunc(ic, claimObjTranslation(claim), address);
+      const arr = claimObjTranslation(claim);
+      console.log(arr);
+      await setClaimFunc(ic, arr, address);
     } else {
       toast("Install metamask", { type: "error" });
     }
@@ -130,7 +147,12 @@ const Insurance_Claim = () => {
       try {
         const res = await axios.post(
           `${config.baseURL}/farmer/claim/create`,
-          userData,
+          {
+            ...userData,
+            loss_percent: "89",
+            payments: "1/12",
+            site_images: [""],
+          },
           { headers: { "x-access-token": cookies.jwt } }
         );
         storeClaimBlockchain(res.data);
