@@ -8,6 +8,8 @@ import Crop_Details from "../components/steps/Crop_Details";
 import Bank_Details from "../components/steps/Bank_Details";
 import Plot_Desc from "../components/steps/Plot_Desc";
 import Done from "../components/steps/Done";
+import { useDispatch } from "react-redux";
+import { useCookies } from "react-cookie";
 
 import Background from "../assets/background_register.jpg";
 
@@ -102,10 +104,19 @@ const Farmer_Register = () => {
   };
 
   useEffect(() => {
+    //const [cookies] = useCookies(["jwt"]);
+    //let token = cookies.jwt;
     console.log(userData);
-
+    //registerData(token);
     return () => {};
   }, [userData]);
+
+  // const registerData = async (token) => {
+  //   const res = await axios.post(`${config.baseURL}/register`, {
+  //     headers: { "x-access-token": token },
+  //   });
+  //   console.log(res);
+  // };
 
   return (
     <div>

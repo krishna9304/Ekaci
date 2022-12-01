@@ -53,12 +53,23 @@ const Insurance_Claim = () => {
     }
   };
 
+  const stepStr = (step) => {
+    switch (step) {
+      case 3:
+        return "crop_details";
+      case 2:
+        return "crop_images";
+      default:
+        return "";
+    }
+  };
+
   const handleClick = (direction) => {
     let newStep = currentStep;
 
     direction === "next" ? newStep++ : newStep--;
     newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
-    setUserData({ ...userData, [displayStep(currentStep)]: partData });
+    setUserData({ ...userData, [stepStr(currentStep)]: partData });
   };
 
   useEffect(() => {

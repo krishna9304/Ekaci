@@ -62,10 +62,10 @@ const Plot_Desc = () => {
       <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
         <input
           onChange={handleChange}
-          value={partData["plot_image"] || ""}
-          name="plot_image"
-          placeholder="Plot Image"
-          type="text"
+          value={partData["plot_img"] || ""}
+          name="plot_img"
+          type="file"
+          accept="image/*"
           className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
         />
       </div>
