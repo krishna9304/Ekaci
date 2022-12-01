@@ -103,20 +103,20 @@ const Farmer_Register = () => {
     setUserData({ ...userData, [stepStr(currentStep)]: partData });
   };
 
+  const [cookies] = useCookies(["jwt"]);
   useEffect(() => {
-    //const [cookies] = useCookies(["jwt"]);
-    //let token = cookies.jwt;
+    let token = cookies.jwt;
     console.log(userData);
-    //registerData(token);
+    registerData(token);
     return () => {};
   }, [userData]);
 
-  // const registerData = async (token) => {
-  //   const res = await axios.post(`${config.baseURL}/register`, {
-  //     headers: { "x-access-token": token },
-  //   });
-  //   console.log(res);
-  // };
+  const registerData = async (token) => {
+    const res = await axios.post(`${config.baseURL}/register`, {
+      headers: { "x-access-token": token },
+    });
+    console.log(res);
+  };
 
   return (
     <div>
