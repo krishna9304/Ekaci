@@ -9,6 +9,8 @@ import Background from "../assets/background_register.jpg";
 import Policy_Details from "../components/steps/Policy_Details";
 import Check from "../components/steps/Check";
 import axios from "axios";
+import config from "../config";
+import { useCookies } from "react-cookie";
 
 const Create_Insurance = () => {
   const initialCreateInsuranceData = {
@@ -23,6 +25,7 @@ const Create_Insurance = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [userData, setUserData] = useState(initialCreateInsuranceData);
   const [partData, setPartData] = useState({});
+  const [cookies] = useCookies(["jwt"]);
 
   const steps = ["Policy_Details", "Custom", "Check", "Done"];
 
@@ -41,7 +44,27 @@ const Create_Insurance = () => {
   };
 
   const handleCreateInsurance = async () => {
-    // const res = await axios.post()
+    if (document.cookie) {
+      try {
+        const insuranceData = new FormData();
+        Object.keys(userData).forEach((key) => {
+          insuranceData.append(key, userData[key]);
+        });
+        const res = await axios.post(
+          `${config.baseURL}/company/insurance/create`,
+          insuranceData,
+          {
+            headers: {
+              "x-access-token": cookies.jwt,
+              "content-type": "multipart/form-data",
+            },
+          }
+        );
+        console.log(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   const handleClick = (direction) => {

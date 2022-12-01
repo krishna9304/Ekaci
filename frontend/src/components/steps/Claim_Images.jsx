@@ -10,6 +10,7 @@ const Claim_Images = () => {
     }
     setPartData({ ...partData, [name]: value });
   };
+
   return (
     <div className="flex flex-col">
       {/* img1 */}

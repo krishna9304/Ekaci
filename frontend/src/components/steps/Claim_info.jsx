@@ -25,32 +25,23 @@ const Claim_Info = () => {
       </div> */}
       {/* drop down auto fill all farmer's insurances */}
       {/* loss_percent */}
-      <div className="font-bold h-6 mt-3 text-gray-500 text-xs leading-8 uppercase">
-        Loss Percentage
-      </div>
-      <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
-        <input
-          onChange={handleChange}
-          value={partData["loss_percent"] || ""}
-          name="loss_percent"
-          placeholder="Loss Percentage"
-          type="text"
-          className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
-        />
-      </div>
       {/* loss type */}
       <div className="font-bold h-6 mt-3 text-gray-500 text-xs leading-8 uppercase">
         Loss Type
       </div>
-      <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
-        <input
-          onChange={handleChange}
-          value={partData["loss_type"] || ""}
+      <div className="bg-white my-2 p-1 flex border border-gray-200 rounded ">
+        <select
+          id="loss_type"
           name="loss_type"
-          placeholder="Loss Type"
-          type="text"
-          className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
-        />
+          value={partData["loss_type"] || ""}
+          onChange={handleChange}
+          className="p-1 px-2  outline-none w-full text-gray-800"
+        >
+          <option value="user">Loss Type</option>
+          <option value="standing-crop">Standing Crop</option>
+          <option value="post-harvest">Post Harvest</option>
+          <option value="calamity">calamity</option>
+        </select>
       </div>
       {/* date of loss */}
       <div className="font-bold h-6 mt-3 text-gray-500 text-xs leading-8 uppercase">

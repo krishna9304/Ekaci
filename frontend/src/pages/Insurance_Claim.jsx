@@ -8,6 +8,10 @@ import Background from "../assets/background_register.jpg";
 import Crop_Details from "../components/steps/Crop_Details";
 import Claim_Info from "../components/steps/Claim_info";
 import Claim_Images from "../components/steps/Claim_Images";
+import { useCookies } from "react-cookie";
+import config from "../config";
+import axios from "axios";
+import Check from "../components/steps/Check";
 
 export const cropImages = {
   img1: "",
@@ -25,19 +29,19 @@ export const cropDetails = {
 };
 
 const initialClaimData = {
-  loss_percent: "",
   loss_type: "",
   date_of_loss: "",
   crop_details: cropDetails,
-  crop_images: cropImages,
+  site_images: cropImages,
 };
 
 const Insurance_Claim = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [userData, setUserData] = useState(initialClaimData);
   const [partData, setPartData] = useState({});
+  const [cookies] = useCookies(["jwt"]);
 
-  const steps = ["Claim Info", "Claim Images", "Crop Details", "Done"];
+  const steps = ["Claim Info", "Claim Images", "Crop Details", "Check", "Done"];
 
   const displayStep = (step) => {
     switch (step) {
@@ -48,6 +52,8 @@ const Insurance_Claim = () => {
       case 3:
         return <Crop_Details />;
       case 4:
+        return <Check />;
+      case 5:
         return <Done />;
       default:
     }
@@ -58,24 +64,28 @@ const Insurance_Claim = () => {
       case 3:
         return "crop_details";
       case 2:
-        return "crop_images";
+        return "site_images";
       default:
         return "";
     }
   };
 
-  // const handleClick = (direction) => {
-  //   let newStep = currentStep;
-
-  //   direction === "next" ? newStep++ : newStep--;
-  //   newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
-  //   setUserData({ ...userData, [stepStr(currentStep)]: partData });
-  // };
+  const handleClaimRequest = async () => {
+    if (document.cookie) {
+      try {
+        const res = await axios.post(
+          `${config.baseURL}/farmer/claim/create`,
+          userData,
+          { headers: { "x-access-token": cookies.jwt } }
+        );
+        console.log(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   const handleClick = (direction) => {
-    if (currentStep == 3) {
-      //registerFarmer();
-    }
     let newStep = currentStep;
 
     direction === "next" ? newStep++ : newStep--;
@@ -83,13 +93,10 @@ const Insurance_Claim = () => {
 
     setUserData({ ...userData, [stepStr(currentStep)]: partData });
     setPartData({});
+    if (currentStep == 4) {
+      handleClaimRequest();
+    }
   };
-
-  useEffect(() => {
-    console.log(userData);
-
-    return () => {};
-  }, [userData]);
 
   return (
     <div>
