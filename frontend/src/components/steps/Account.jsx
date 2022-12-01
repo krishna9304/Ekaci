@@ -2,10 +2,10 @@ import React, { useContext } from "react";
 import { StepperContext } from "../../contexts/StepperContext";
 
 const Account = () => {
-  const { partData, setPartData } = useContext(StepperContext);
+  const { userData, setUserData } = useContext(StepperContext);
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setPartData({ ...partData, [name]: value });
+    setUserData({ ...userData, [name]: value });
   };
   return (
     <div className="flex flex-col">
@@ -16,7 +16,7 @@ const Account = () => {
       <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
         <input
           onChange={handleChange}
-          value={partData["farmer_id"] || ""}
+          value={userData["farmer_id"] || ""}
           name="farmer_id"
           placeholder="FarmerID"
           type="text"
@@ -31,7 +31,7 @@ const Account = () => {
       <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
         <input
           onChange={handleChange}
-          value={partData["first_name"] || ""}
+          value={userData["first_name"] || ""}
           name="first_name"
           placeholder="First Name"
           type="text"
@@ -46,7 +46,7 @@ const Account = () => {
       <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
         <input
           onChange={handleChange}
-          value={partData["middle_name"] || ""}
+          value={userData["middle_name"] || ""}
           name="middle_name"
           placeholder="Middle Name"
           type="text"
@@ -61,7 +61,7 @@ const Account = () => {
       <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
         <input
           onChange={handleChange}
-          value={partData["last_name"] || ""}
+          value={userData["last_name"] || ""}
           name="last_name"
           placeholder="Last Name"
           type="text"
@@ -76,7 +76,7 @@ const Account = () => {
       <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
         <input
           onChange={handleChange}
-          value={partData["post_office"] || ""}
+          value={userData["post_office"] || ""}
           name="post_office"
           placeholder="Post Office"
           type="text"
@@ -91,7 +91,7 @@ const Account = () => {
       <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
         <input
           onChange={handleChange}
-          value={partData["police_station"] || ""}
+          value={userData["police_station"] || ""}
           name="police_station"
           placeholder="Police Station"
           type="text"
@@ -106,7 +106,7 @@ const Account = () => {
       <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
         <input
           onChange={handleChange}
-          value={partData["district"] || ""}
+          value={userData["district"] || ""}
           name="district"
           placeholder="District"
           type="text"
@@ -121,7 +121,7 @@ const Account = () => {
       <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
         <input
           onChange={handleChange}
-          value={partData["pincode"] || ""}
+          value={userData["pincode"] || ""}
           name="pincode"
           placeholder="Pin Code"
           type="text"
@@ -136,7 +136,7 @@ const Account = () => {
       <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
         <input
           onChange={handleChange}
-          value={partData["state"] || ""}
+          value={userData["state"] || ""}
           name="state"
           placeholder="State"
           type="text"
@@ -152,7 +152,7 @@ const Account = () => {
         <select
           id="farmer_type"
           name="farmer_type"
-          value={partData["farmer_type"] || ""}
+          value={userData["farmer_type"] || ""}
           onChange={handleChange}
           className="p-1 px-2  outline-none w-full text-gray-800"
         >
@@ -172,7 +172,7 @@ const Account = () => {
         <select
           id="farmer_category"
           name="farmer_category"
-          value={partData["farmer_category"] || ""}
+          value={userData["farmer_category"] || ""}
           onChange={handleChange}
           className="p-1 px-2  outline-none w-full text-gray-800"
         >

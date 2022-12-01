@@ -12,6 +12,8 @@ import { useDispatch } from "react-redux";
 import { useCookies } from "react-cookie";
 
 import Background from "../assets/background_register.jpg";
+import axios from "axios";
+import config from "../config";
 
 export const plotDescription = {
   plot_no: "",
@@ -94,28 +96,35 @@ const Farmer_Register = () => {
         return "";
     }
   };
+  const [cookies] = useCookies(["jwt"]);
+  const registerFarmer = async () => {
+    if (document.cookie) {
+      const token = cookies?.jwt;
+      if (token) {
+        try {
+          const res = await axios.post(
+            `${config.baseURL}/farmer/register`,
+            userData,
+            { headers: { "x-access-token": token } }
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+  };
 
   const handleClick = (direction) => {
+    if (currentStep == 4) {
+      registerFarmer();
+    }
     let newStep = currentStep;
 
     direction === "next" ? newStep++ : newStep--;
     newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
+
     setUserData({ ...userData, [stepStr(currentStep)]: partData });
-  };
-
-  const [cookies] = useCookies(["jwt"]);
-  useEffect(() => {
-    let token = cookies.jwt;
-    console.log(userData);
-    registerData(token);
-    return () => {};
-  }, [userData]);
-
-  const registerData = async (token) => {
-    const res = await axios.post(`${config.baseURL}/register`, {
-      headers: { "x-access-token": token },
-    });
-    console.log(res);
+    setPartData({});
   };
 
   return (

@@ -6,8 +6,30 @@ const Plot_Desc = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setPartData({ ...partData, [name]: value });
+    if (e.target.type === "file") uploadImage(e);
+    else setPartData({ ...partData, [name]: value });
   };
+  const uploadImage = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertBase64(file);
+    setPartData((pd) => ({ ...pd, plot_img: base64 }));
+  };
+
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      try {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+
+        fileReader.onload = () => {
+          resolve(fileReader.result);
+        };
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+
   return (
     <div className="flex flex-col">
       {/* Plot No */}
@@ -62,8 +84,7 @@ const Plot_Desc = () => {
       <div className="bg-white my-2 p-1 flex border border-gray-200 rounded">
         <input
           onChange={handleChange}
-          value={partData["plot_img"] || ""}
-          name="plot_img"
+          name="plot_img1"
           type="file"
           accept="image/*"
           className="p-1 px-2 appearance-none outline-none w-full text-gray-800"

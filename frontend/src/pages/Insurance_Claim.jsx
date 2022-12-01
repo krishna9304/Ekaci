@@ -64,12 +64,25 @@ const Insurance_Claim = () => {
     }
   };
 
+  // const handleClick = (direction) => {
+  //   let newStep = currentStep;
+
+  //   direction === "next" ? newStep++ : newStep--;
+  //   newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
+  //   setUserData({ ...userData, [stepStr(currentStep)]: partData });
+  // };
+
   const handleClick = (direction) => {
+    if (currentStep == 3) {
+      //registerFarmer();
+    }
     let newStep = currentStep;
 
     direction === "next" ? newStep++ : newStep--;
     newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
+
     setUserData({ ...userData, [stepStr(currentStep)]: partData });
+    setPartData({});
   };
 
   useEffect(() => {
