@@ -1,21 +1,31 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../assets/logo_white_2.png";
 import Image from "../assets/register.png";
-import { signInUser } from "../redux/authSlice";
+import { setUser, signInUser } from "../redux/authSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const user = useSelector((state) => state.authReducer.user);
   const dispatch = useDispatch();
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    dispatch(signInUser({ phone, password }));
+    dispatch(setUser(await signInUser({ phone, password })));
   };
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) console.log(user);
+    if (user && !user.metadata) {
+      if (user.userType == "farmer") navigate("/farmer_register");
+      if (user.userType == "company") navigate("/insurance_register");
+    }
+    if (user && user.metadata) {
+      if (user.userType == "farmer") navigate("/farmer_dashboard");
+      if (user.userType == "company") navigate("/insurance_dashboard");
+    }
+    return () => {};
   }, [user]);
   return (
     <div className=" flex flex-row h-screen">

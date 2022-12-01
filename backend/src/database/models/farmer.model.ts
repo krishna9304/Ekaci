@@ -60,7 +60,7 @@ const Farmer = new Schema<FarmerInterface>({
   },
   avatar: {
     type: String,
-    required: true,
+    default:random_prof
   },
   first_name: {
     type: String,
@@ -96,7 +96,7 @@ const Farmer = new Schema<FarmerInterface>({
   },
   landmark: {
     type: String,
-    required: true,
+    required: false,
   },
   plot_desc: {
     type: Object,

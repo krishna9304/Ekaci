@@ -8,12 +8,14 @@ import Crop_Details from "../components/steps/Crop_Details";
 import Bank_Details from "../components/steps/Bank_Details";
 import Plot_Desc from "../components/steps/Plot_Desc";
 import Done from "../components/steps/Done";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 
 import Background from "../assets/background_register.jpg";
 import axios from "axios";
 import config from "../config";
+import Check from "../components/steps/Check";
+import { useNavigate } from "react-router-dom";
 
 export const plotDescription = {
   plot_no: "",
@@ -39,7 +41,6 @@ export const cropDetails = {
 
 const initialUserData = {
   farmer_id: "",
-  avatar: "",
   first_name: "",
   middle_name: "",
   post_office: "",
@@ -59,12 +60,14 @@ const Farmer_Register = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [userData, setUserData] = useState(initialUserData);
   const [partData, setPartData] = useState({});
+  const user = useSelector((state) => state.authReducer.user);
 
   const steps = [
     "Account information",
     "Plot Description",
     "Crop Details",
     "Bank Details",
+    "Check",
     "Done",
   ];
 
@@ -79,6 +82,8 @@ const Farmer_Register = () => {
       case 4:
         return <Bank_Details />;
       case 5:
+        return <Check />;
+      case 6:
         return <Done />;
       default:
     }
@@ -92,11 +97,14 @@ const Farmer_Register = () => {
         return "crop_details";
       case 4:
         return "bank_details";
+      case 5:
+        return "check";
       default:
         return "";
     }
   };
   const [cookies] = useCookies(["jwt"]);
+
   const registerFarmer = async () => {
     if (document.cookie) {
       const token = cookies?.jwt;
@@ -107,6 +115,7 @@ const Farmer_Register = () => {
             userData,
             { headers: { "x-access-token": token } }
           );
+          console.log(res);
         } catch (error) {
           console.log(error);
         }
@@ -115,9 +124,6 @@ const Farmer_Register = () => {
   };
 
   const handleClick = (direction) => {
-    if (currentStep == 4) {
-      registerFarmer();
-    }
     let newStep = currentStep;
 
     direction === "next" ? newStep++ : newStep--;
@@ -125,7 +131,22 @@ const Farmer_Register = () => {
 
     setUserData({ ...userData, [stepStr(currentStep)]: partData });
     setPartData({});
+    if (currentStep == 5) {
+      registerFarmer();
+    }
   };
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user && user.metadata) {
+      if (user.userType == "farmer") navigate("/farmer_dashboard");
+      if (user.userType == "company") navigate("/insurance_dashboard");
+    }
+    if (user && !user.metadata) {
+      if (user.userType == "farmer") navigate("/farmer_register");
+      if (user.userType == "company") navigate("/insurance_register");
+    }
+    return () => {};
+  }, [user]);
 
   return (
     <div>
