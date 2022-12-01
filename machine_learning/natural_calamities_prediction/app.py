@@ -1,15 +1,17 @@
-import json
+
 
 import numpy as np
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import pandas as pd
 import pickle
 
 
 app = Flask(__name__)
+
 #load the mdel fl sourav bera
-filename = 'weather_model.sav'
+filename = 'disaster_predict.sav'
 model = pickle.load(open(filename, 'rb'))
+
 tables = pd.read_html("http://hydro.imd.gov.in/hydrometweb/(S(ht2dew45izstmbyyphslh455))/landing.aspx#")
 states={'ANDAMAN & NICOBAR ISLANDS': 0, 'ARUNACHAL PRADESH': 1, 'ASSAM':2, 'MEGHALAYA': 2, 'BIHAR': 3, 'CHHATTISGARH': 4, 'ANDHRA PRADESH': 5,
 'KARNATAKA': 6, 'MADHYA PRADESH': 7, 'RAJASTHAN': 8, 'UTTAR PRADESH': 9, 'WEST BENGAL': 10, 'GUJARAT': 11,
@@ -18,15 +20,24 @@ states={'ANDAMAN & NICOBAR ISLANDS': 0, 'ARUNACHAL PRADESH': 1, 'ASSAM':2, 'MEGH
 'ODISHA': 23, 'PUNJAB': 24, 'RAYALSEEMA': 25, 'SAURASHTRA & KUTCH': 26, 'SOUTH INTERIOR KARNATAKA': 27, 'SUB HIMALAYAN WEST BENGAL & SIKKIM': 28,
 'TAMIL NADU': 29, 'TELANGANA': 30, 'UTTARAKHAND': 31, 'VIDARBHA': 32, 'WEST MADHYA PRADESH': 33, 'WEST RAJASTHAN': 34, 'WEST UTTAR PRADESH': 35}
 
-#  read t
+#  read dataframe
 tables=np.array(tables[4])
-# print(tables)
+# get the dataframe set
 tables=np.array(tables[1:])
+
+@app.route('/greet', methods= ['GET'])
+def get():
+       return jsonify({'message':'hello'})
+
+# @app.route("/")
+# def root():
+#     return render_template("index.html")
+
 
 @app.route('/predict_disaster', methods=['POST'])
 def predict_disaster():
     #json= {'district': value, 'state': 'ODISHA')
-    data= request.get_json(force=True)
+    data = request.get_json(force=True)
     a = max(tables[tables[:, 1] == (data['district'].upper())][:, 2].flatten(), default=-1)
     if(a== -1):
         return jsonify('Invalid District')
@@ -43,10 +54,14 @@ def predict_disaster():
         else:
             return jsonify(" Severe Flood chances are at peak.")
 
-#      Get weather daya
-@app.route('/get_data', methods=['POST'])
-def get_weather_data():
-    data= request.get_json(force= True)
+# #      Get weather daya
+# @app.route('/get_data', methods=['POST'])
+# def get_weather_data():
+#     data= request.get_json(force= True)
+
+if __name__ == '__main__':
+    app.run(port=8000, debug=True)
+
 
 
 

@@ -17,7 +17,7 @@ model= tf.keras.models.load_model(
        custom_objects={'KerasLayer': hub.KerasLayer}
 )
 
-@app.route('/get', methods= ['GET'])
+@app.route('/greet', methods= ['GET'])
 def get():
        return jsonify({'message':'hello'})
 
