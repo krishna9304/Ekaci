@@ -19,4 +19,18 @@ export const farmerFunctions = {
       }
     );
   },
+
+  update(filter: any, data: any) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const updated = await farmerModel.updateMany(
+          { ...filter },
+          { ...data }
+        );
+        resolve(updated);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
 };

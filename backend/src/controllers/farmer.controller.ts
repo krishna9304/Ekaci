@@ -8,6 +8,7 @@ import { RequestJwt } from "../middlewares/jwt";
 import { ClaimService } from "../services/claim.service";
 import { ClaimFunctions } from "../database/functions/claim.function";
 import { ClaimInterface, trackStatus } from "../database/models/claim.model";
+import { SERVER_URL } from "../constants";
 
 export const FarmerControlller = {
   async register(
@@ -41,6 +42,11 @@ export const FarmerControlller = {
         ResponseTypes._ERROR_
       );
       return res.status(returnVal.getCode()).json(returnVal.getArray());
+    }
+    if (req.file) {
+      const url =
+        req.protocol + "://" + SERVER_URL + "/static/" + req.file.filename;
+      reqBody.plot_desc.plot_image = url;
     }
     try {
       reqBody.farmer_id = req.user?.metamask_address;
@@ -80,7 +86,6 @@ export const FarmerControlller = {
       "insurance_id",
       "payments",
       "crop_details",
-      "site_images",
       "loss_percent",
       "loss_type",
       "date_of_loss",
@@ -96,6 +101,15 @@ export const FarmerControlller = {
       return res.status(returnVal.getCode()).json(returnVal.getArray());
     }
 
+    if (req.files?.length) {
+      let arrOfUrls: Array<String> = [];
+      Array(req.files).forEach((file: any) => {
+        const url =
+          req.protocol + "://" + SERVER_URL + "/static/" + file.filename;
+        arrOfUrls.push(url);
+      });
+      reqBody.site_images = arrOfUrls;
+    }
     try {
       if (req.user?.userType !== "farmer" || !req.user.farmer_ref) {
         const returnVal = new Info(
@@ -123,6 +137,30 @@ export const FarmerControlller = {
       return res.status(201).json(savedClaimDoc);
     } catch (error) {
       next(error);
+    }
+  },
+
+  async buyInsurance(
+    req: RequestJwt,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<any, Record<string, any>> | undefined> {
+    const reqBody: any = req.body;
+    const paramsReq: Array<string> = [
+      "insurance_id",
+      "farmer_id",
+      "payments_done",
+      "total_payments",
+    ];
+    const errors: String[] = compareParams(paramsReq, reqBody);
+    if (errors.length) {
+      const returnVal = new Info(
+        400,
+        "Following parameters are required in the request body: " +
+          JSON.stringify(errors),
+        ResponseTypes._ERROR_
+      );
+      return res.status(returnVal.getCode()).json(returnVal.getArray());
     }
   },
 };

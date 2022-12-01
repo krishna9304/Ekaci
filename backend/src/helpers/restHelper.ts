@@ -48,9 +48,15 @@ export const compareParams: (
   reqBody: Object
 ) => String[] = (paramsReq: Array<string>, reqBody: Object): String[] => {
   let errors: Array<String> = [];
-  const keys: string[] = Object.keys(reqBody);
+  const keys = Object.keys(reqBody);
   paramsReq.forEach((val: string): void => {
     if (!keys.includes(val)) errors.push(val);
   });
   return errors;
+};
+
+export const convertFormDataToJSON = (formdata: FormData) => {
+  let object: any;
+  formdata.forEach((value, key) => (object[key] = value));
+  return object;
 };

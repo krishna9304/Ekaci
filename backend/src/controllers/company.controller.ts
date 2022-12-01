@@ -1,4 +1,5 @@
 import { NextFunction, Response } from "express";
+import { SERVER_URL } from "../constants";
 import { CompanyFunctions } from "../database/functions/company.function";
 import { InsuranceFunctions } from "../database/functions/insurance.function";
 import { CompanyInterface } from "../database/models/company.model";
@@ -65,9 +66,9 @@ export const CompanyController = {
     next: NextFunction
   ): Promise<Response<any, Record<string, any>> | undefined> {
     const reqBody: any = req.body;
+    console.log(reqBody);
     const paramsReq: Array<string> = [
       "name",
-      "content",
       "tenure",
       "premium",
       "total_amount",
@@ -83,7 +84,11 @@ export const CompanyController = {
       );
       return res.status(returnVal.getCode()).json(returnVal.getArray());
     }
-
+    if (req.file) {
+      const url =
+        req.protocol + "://" + SERVER_URL + "/static/" + req.file.filename;
+      reqBody.content = url;
+    }
     try {
       if (req.user?.userType !== "company") {
         const returnVal = new Info(

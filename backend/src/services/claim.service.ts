@@ -18,6 +18,7 @@ export const ClaimService = {
       "is_active",
       "site_images",
     ];
+
     for (let key of Object.keys(claim)) {
       if (!excludedKeysCheck.includes(key)) {
         if (
