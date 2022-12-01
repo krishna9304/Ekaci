@@ -3,19 +3,15 @@
 pragma solidity >=0.8.0;
 
 /*
-
-1. ["1234", "20,200", ["to be settled by company", true], ["Rabi", "Rice", "Water logging", "Summer"], ["url1", "url2", "url3"], true, "34.7", "Natural Disaster", "2 Oct", "1 Mar", "3 Dec"]
+1. ["1234","claimantID", "20,200", [true,false,false], ["Rabi", "Rice", "Water logging", "Summer"], ["url1", "url2", "url3"], true, "34.7", "Natural Disaster", "2 Oct", "1 Mar", "3 Dec"]
 2. 1234,20,200,to be settled by company,true,Rabi,Rice,Water logging,Summer,url1,url2,url3,true,34.7,Natural Disaster,2 Oct,1 Mar,3 Dec
 3. 1234,0x,0x,true,0x,0x,0x,0x,0x,true,0x,0x,0x,0x,0x
-
 */
-
-
-// Deployed to 0x1011CFf3a19bc046725002B95811e2F5FbCA7Be8
 
 contract InsuranceClaim{
    
 mapping (string => individualClaim) private totalClaims;
+
 individualClaim [] private claimArray;
 
 event _setClaim(string indexed _insuranceId);
@@ -26,6 +22,7 @@ function setClaim(
 ) public {
     individualClaim memory newObj=individualClaim(
          obj.insuranceId,
+         obj.claimantId,
          obj.payment,
          obj.currStatus,
          obj.currCrop,
@@ -53,6 +50,21 @@ function getTotalClaim() public view returns (individualClaim [] memory){
 }
 
 
+function isSettled(string memory insuranceId) public {
+ 
+ totalClaims[insuranceId].isActive = false;
+
+for(uint i=0; i<claimArray.length;i++){
+    string memory currId=claimArray[i].insuranceId;
+  
+  if (keccak256(abi.encodePacked(currId)) == keccak256(abi.encodePacked(insuranceId))) {
+   claimArray[i].isActive=false;
+    break;
+   } }
+}
+
+
+
 // ---------------------- UPDATE FUNCTIONS ----------------------
 
 
@@ -72,16 +84,26 @@ for(uint i=0; i<n;i++){
 } }
 
 
-function updateStatus(string memory insuranceId, status memory currStatus) public {
-   totalClaims[insuranceId].currStatus=currStatus;
+function updateStatus(string memory insuranceId) public {
+   
+   bool [] memory tempArray = totalClaims[insuranceId].currStatus;
 
-   uint n = claimArray.length;
+  for(uint i=0;i<tempArray.length;i++){
+     if(tempArray[i]==false){
+        tempArray[i]=true;
+        break;
+     }
+  }
+
+totalClaims[insuranceId].currStatus=tempArray;
+
+uint n = claimArray.length;
 
 for(uint i=0; i<n;i++){
    string memory currId=claimArray[i].insuranceId;
  
   if (keccak256(abi.encodePacked(currId)) == keccak256(abi.encodePacked(insuranceId))) {
-    claimArray[i].currStatus=currStatus;
+    claimArray[i].currStatus=tempArray;
     break;
    }
 }}
@@ -207,15 +229,14 @@ for(uint i=0; i<n;i++){
 } }
 
 
-
-
 //   ----------------- STRUCTS ----------------------
 
    struct individualClaim{
-  
+
    string insuranceId;
+   string claimantId;
    string payment;
-   status currStatus;   
+   bool [] currStatus;   
    cropDetails currCrop;
    string [] imageURL;
    bool isActive;

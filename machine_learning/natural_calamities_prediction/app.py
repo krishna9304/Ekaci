@@ -54,13 +54,14 @@ def predict_disaster():
         else:
             return jsonify(" Severe Flood chances are at peak.")
 
-# #      Get weather daya
-# @app.route('/get_data', methods=['POST'])
-# def get_weather_data():
-#     data= request.get_json(force= True)
+#      Get weather daya
+@app.route('/get_data', methods=['POST'])
+def get_weather_data():
+    data= request.get_json(force= True)
+
 
 if __name__ == '__main__':
-    app.run(port=8000, debug=True)
+    app.run(port=5000, debug=True)
 
 
 
