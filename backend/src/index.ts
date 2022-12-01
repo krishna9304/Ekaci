@@ -20,6 +20,7 @@ app.use(
 );
 app.use(timeout("120s"));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded())
 app.use(haltOnTimedout);
 app.use(morgan("dev"));
 

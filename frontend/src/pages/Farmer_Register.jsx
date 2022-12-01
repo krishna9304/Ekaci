@@ -8,8 +8,12 @@ import Crop_Details from "../components/steps/Crop_Details";
 import Bank_Details from "../components/steps/Bank_Details";
 import Plot_Desc from "../components/steps/Plot_Desc";
 import Done from "../components/steps/Done";
+import { useDispatch } from "react-redux";
+import { useCookies } from "react-cookie";
 
 import Background from "../assets/background_register.jpg";
+import axios from "axios";
+import config from "../config";
 
 export const plotDescription = {
   plot_no: "",
@@ -92,20 +96,36 @@ const Farmer_Register = () => {
         return "";
     }
   };
+  const [cookies] = useCookies(["jwt"]);
+  const registerFarmer = async () => {
+    if (document.cookie) {
+      const token = cookies?.jwt;
+      if (token) {
+        try {
+          const res = await axios.post(
+            `${config.baseURL}/farmer/register`,
+            userData,
+            { headers: { "x-access-token": token } }
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+  };
 
   const handleClick = (direction) => {
+    if (currentStep == 4) {
+      registerFarmer();
+    }
     let newStep = currentStep;
 
     direction === "next" ? newStep++ : newStep--;
     newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
+
     setUserData({ ...userData, [stepStr(currentStep)]: partData });
+    setPartData({});
   };
-
-  useEffect(() => {
-    console.log(userData);
-
-    return () => {};
-  }, [userData]);
 
   return (
     <div>

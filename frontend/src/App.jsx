@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -10,24 +10,28 @@ import Insurance_Claim from "./pages/Insurance_Claim";
 import axios from "axios";
 import config from "./config";
 import { useCookies } from "react-cookie";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setUser } from "./redux/authSlice";
+import Create_Insurance from "./pages/Create_Insurance";
 
 function App() {
   const [cookies] = useCookies(["jwt"]);
   let dispatch = useDispatch();
-  const globalState = useSelector((state) => state);
   let authUser = async () => {
     if (document.cookie) {
       let token;
       token = cookies.jwt;
       if (token) {
-        const res = await axios.get(`${config.baseURL}/self`, {
-          headers: { "x-access-token": token },
-        });
-        const user = res.data.user;
-        dispatch(setUser(user));
-        document.cookie = "jwt=" + res.data.token;
+        try {
+          const res = await axios.get(`${config.baseURL}/user/self`, {
+            headers: { "x-access-token": token },
+          });
+          const user = res.data.user;
+          dispatch(setUser(user));
+          document.cookie = "jwt=" + res.data.token;
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   };
@@ -52,6 +56,7 @@ function App() {
           element={<Government_Registeration />}
         />
         <Route path="/insurance_claim" element={<Insurance_Claim />} />
+        <Route path="/create_insurance" element={<Create_Insurance />} />
       </Routes>
     </>
   );
